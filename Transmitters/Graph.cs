@@ -16,11 +16,13 @@ namespace Transmitters
             nodes = new List<Node>();
             edges = new List<Edge>();
         }
+
         public Graph(List<Node> inputNodes, List<Edge> inputEdges)
         {
             nodes = inputNodes;
             edges = inputEdges;
         }
+
 
         public void GenerateGXL(string fileName)
         {
@@ -31,12 +33,12 @@ namespace Transmitters
             {
                 XElement node = new XElement("node");
                 XAttribute id = new XAttribute("id", item.name);
-                XAttribute xPos = new XAttribute("x",
+                XAttribute xCoordinate = new XAttribute("x",
                     Math.Round(item.radius * Math.Cos(item.angle * Math.PI / 180), 4));
-                XAttribute yPos = new XAttribute("y",
+                XAttribute yCoordinate = new XAttribute("y",
                     Math.Round(item.radius * Math.Sin(item.angle * Math.PI / 180), 4));
 
-                node.Add(id, xPos, yPos);
+                node.Add(id, xCoordinate, yCoordinate);
                 graph.Add(node);
             }
 
@@ -54,6 +56,7 @@ namespace Transmitters
             gxl.Add(graph);
             gxl.Save(fileName);
         }
+
         public static Graph ReadGXL(string fileName)
         {
             XDocument gxlDocument = XDocument.Load(fileName);
@@ -67,17 +70,13 @@ namespace Transmitters
             {
                 var resolvedName = node.Attribute("id").Value.ToString();
 
-                var xCord = double.Parse(node.Attribute("x").Value.ToString(), CultureInfo.InvariantCulture);
-                var yCord = double.Parse(node.Attribute("y").Value.ToString(), CultureInfo.InvariantCulture);
+                var xCoordinate = double.Parse(node.Attribute("x").Value.ToString(), CultureInfo.InvariantCulture);
+                var yCoordinate = double.Parse(node.Attribute("y").Value.ToString(), CultureInfo.InvariantCulture);
 
-                var resolvedRadius = Math.Sqrt(Math.Pow(xCord, 2) + Math.Pow(yCord, 2));
-                var resolvedAngle = Math.Atan2(yCord, xCord) * 180 / Math.PI;
+                var resolvedRadius = Math.Sqrt(Math.Pow(xCoordinate, 2) + Math.Pow(yCoordinate, 2));
+                var resolvedAngle = Math.Atan2(yCoordinate, xCoordinate) * 180 / Math.PI;
 
-                listOfReceivedNodes.Add(new Node(
-                    resolvedName,
-                    resolvedRadius,
-                    resolvedAngle
-                ));
+                listOfReceivedNodes.Add(new Node(resolvedName, resolvedRadius, resolvedAngle));
             }
 
             var listOfReceivedEdges = new List<Edge>();
@@ -120,6 +119,7 @@ namespace Transmitters
             return Math.Sqrt(Math.Pow(radius, 2) + Math.Pow(neighbour.radius, 2) - 2 * radius * neighbour.radius
                 * Math.Cos(angle * Math.PI / 180 - neighbour.angle * Math.PI / 180));
         }
+
         public bool HasColor()
         {
             if (color == -1)
@@ -129,11 +129,9 @@ namespace Transmitters
 
             return true;
         }
+
         public bool CanColor(int inputColor, List<Edge> edges)
         {
-            if (HasColor())
-                return false;
-
             var neighbours = GetNeighbours(edges);
 
             foreach (var neighbour in neighbours)
@@ -146,9 +144,11 @@ namespace Transmitters
 
             return true;
         }
+
         public List<Node> GetNeighbours(List<Edge> edges)
         {
             var neighbours = new List<Node>();
+
             foreach (var edge in edges)
             {
                 if (edge.start.name == name)
@@ -179,6 +179,7 @@ namespace Transmitters
             this.end = end;
             id = lastEdgeId++;
         }
+
         public Edge(Node start, Node end, int id)
         {
             this.start = start;
