@@ -23,15 +23,17 @@ namespace TransmittersProblem
             PrepareCanvas();
         }
 
-        private void button_Click_1(object sender, RoutedEventArgs e)
+        private void calculateButton_click(object sender, RoutedEventArgs e)
         {
             canvas.Children.Clear();
             PrepareCanvas();
+            resultLabel.Content = string.Empty;
 
             var graph = GenerateTransmitters(
                 int.Parse(cityRadiusTextBox.Text),
                 int.Parse(noOfTransmittersTextBox.Text),
-                int.Parse(transmitterRadiusTextBox.Text));
+                int.Parse(transmitterRadiusTextBox.Text)
+            );
             listOfNodes = graph.nodes;
             listOfEdges = graph.edges;
 
@@ -40,8 +42,8 @@ namespace TransmittersProblem
                 DrawColoredCircle(
                     node.radius * Math.Cos(node.angle * Math.PI / 180),
                     node.radius * Math.Sin(node.angle * Math.PI / 180),
-                    int.Parse(transmitterRadiusTextBox.Text
-                ));
+                    int.Parse(transmitterRadiusTextBox.Text)
+                );
             }
 
             foreach (var edge in graph.edges)
@@ -209,38 +211,13 @@ namespace TransmittersProblem
                         );
                         currentColor = 1;
                     }
-
-
                 }
 
                 currentNeighbours.Clear();
             }
 
-            /*
-            var best = listOfNodes.OrderByDescending(n => n.neighbourCount).First();
-            resultDescriptionLabel.Content = best.name + " " + best.neighbourCount;
-
-            var result = best.GetNeighbours(listOfEdges);
-            string text = "";
-            int i = 1;
-            foreach (var item in result)
-            {
-                DrawColoredCircle(
-                    item.radius * Math.Cos(item.angle * Math.PI / 180),
-                    item.radius * Math.Sin(item.angle * Math.PI / 180),
-                    double.Parse(transmitterRadiusTextBox.Text),
-                    i
-                    );
-                i++;
-                if (i>3)
-                {
-                    i = 1;
-                }
-                text += item.name + ", ";
-            }
-
-            MessageBox.Show(text);
-            */
+            var numberOfUsedColors = sortedListOfNodes.Select(n => n.color).Distinct().Count();
+            resultLabel.Content = numberOfUsedColors;
         }
     }
 }

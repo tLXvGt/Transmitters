@@ -13,7 +13,7 @@
                 Height="500" Width="500" x:Name="canvas" ClipToBounds="True"/>
         </Border>
         <Button x:Name="button" Content="Calculate" HorizontalAlignment="Left" VerticalAlignment="Top"
-                Width="75" RenderTransformOrigin="0.381,0.879" Click="button_Click_1" Margin="546,25,0,0" Height="22" />
+                Width="75" RenderTransformOrigin="0.381,0.879" Click="calculateButton_click" Margin="546,25,0,0" Height="22" />
         <TextBox x:Name="cityRadiusTextBox" HorizontalAlignment="Left" Height="22" Margin="685,89,0,0"
                  TextWrapping="Wrap" Text="200" VerticalAlignment="Top" Width="79"/>
         <TextBox x:Name="noOfTransmittersTextBox" HorizontalAlignment="Left" Height="22" Margin="685,120,0,0"
@@ -25,7 +25,7 @@
         <Label x:Name="cityRadiusLabel" Content="City radius" HorizontalAlignment="Left" Margin="546,85,0,0" VerticalAlignment="Top"/>
 
         <Button x:Name="solveButton" Content="Solve" HorizontalAlignment="Left" Margin="546,207,0,0" VerticalAlignment="Top" Width="75" Click="solveButton_Click"/>
-        <Label x:Name="resultDescriptionLabel" Content="Result" HorizontalAlignment="Left" Margin="546,232,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="resultDescriptionLabel" Content="Result" HorizontalAlignment="Left" Margin="546,232,0,0" VerticalAlignment="Top" Width="75"/>
         <Label x:Name="resultLabel" Content="" HorizontalAlignment="Left" Margin="685,232,0,0" VerticalAlignment="Top" Width="62"/>
     </Grid>
 </Window>

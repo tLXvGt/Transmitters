@@ -9,7 +9,7 @@ namespace Transmitters
     public class Graph
     {
         public List<Node> nodes;
-        public List<Edge> edges; // af
+        public List<Edge> edges;
 
         public Graph()
         {
