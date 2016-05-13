@@ -12,20 +12,34 @@
             <Canvas HorizontalAlignment="Left" Margin="0, 0, 1, 1" VerticalAlignment="Top"
                 Height="500" Width="500" x:Name="canvas" ClipToBounds="True"/>
         </Border>
-        <Button x:Name="button" Content="Calculate" HorizontalAlignment="Left" VerticalAlignment="Top"
-                Width="75" RenderTransformOrigin="0.381,0.879" Click="calculateButton_click" Margin="546,25,0,0" Height="22" />
-        <TextBox x:Name="cityRadiusTextBox" HorizontalAlignment="Left" Height="22" Margin="685,89,0,0"
-                 TextWrapping="Wrap" Text="200" VerticalAlignment="Top" Width="79"/>
-        <TextBox x:Name="noOfTransmittersTextBox" HorizontalAlignment="Left" Height="22" Margin="685,120,0,0"
-                 TextWrapping="Wrap" Text="20" VerticalAlignment="Top" Width="79"/>
-        <TextBox x:Name="transmitterRadiusTextBox" HorizontalAlignment="Left" Height="22" Margin="685,151,0,0"
-                 TextWrapping="Wrap" Text="20" VerticalAlignment="Top" Width="79"/>
-        <Label x:Name="noOfTransmittersLabel" Content="No. of transmitters" HorizontalAlignment="Left" Margin="546,116,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="transmitterRadiusLabel" Content="Transmitter radius" HorizontalAlignment="Left" Margin="546,147,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="cityRadiusLabel" Content="City radius" HorizontalAlignment="Left" Margin="546,85,0,0" VerticalAlignment="Top"/>
 
-        <Button x:Name="solveButton" Content="Solve" HorizontalAlignment="Left" Margin="546,207,0,0" VerticalAlignment="Top" Width="75" Click="solveButton_Click"/>
-        <Label x:Name="resultDescriptionLabel" Content="Result" HorizontalAlignment="Left" Margin="546,232,0,0" VerticalAlignment="Top" Width="75"/>
-        <Label x:Name="resultLabel" Content="" HorizontalAlignment="Left" Margin="685,232,0,0" VerticalAlignment="Top" Width="62"/>
+        <Button x:Name="generateButton" Content="Generate" HorizontalAlignment="Right" VerticalAlignment="Top"
+                Margin="0, 25, 160 ,0" Width="80" Click="generateButton_click" Height="22" />
+
+        <TextBox x:Name="cityRadiusTextBox" Text="200" Height="22" Width="80"
+                 Margin="0, 55, 30, 0"  HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <TextBox x:Name="noOfTransmittersTextBox" Text="20"  Height="22" Width="80"
+                 Margin="0, 87, 30, 0"  HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <TextBox x:Name="transmitterRadiusTextBox" Text="20" Height="22" Width="80"
+                 Margin="0, 118, 30, 0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        
+        <Label x:Name="cityRadiusLabel" Content="City radius" Width="120"
+               Margin="0, 51, 120, 0"  HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <Label x:Name="noOfTransmittersLabel" Content="No. of transmitters" Width="120"
+               Margin="0, 83, 120, 0"  HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <Label x:Name="transmitterRadiusLabel" Content="Transmitter radius" Width="120"
+               Margin="0, 114, 120, 0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+
+        <Button x:Name="openGxlButton" Content="Open GXL" Width="100"
+                Margin="0, 160, 140, 0" HorizontalAlignment="Right" VerticalAlignment="Top" Click="openGxlButton_Click"/>
+        <Button x:Name="saveGxlButton" Content="Save GXL" Width="100"
+                Margin="0, 160, 30, 0" HorizontalAlignment="Right" VerticalAlignment="Top" Click="saveGxlButton_Click"/>
+        
+        <Button x:Name="solveButton" Content="Solve" Width="80" Click="solveButton_Click"
+                Margin="0, 200, 160, 0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <Label x:Name="resultDescriptionLabel" Content="Result" Width="80"
+               Margin="0, 230, 160, 0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <Label x:Name="resultLabel" Content="" Width="50"
+               Margin="0, 230, 80, 0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
     </Grid>
 </Window>

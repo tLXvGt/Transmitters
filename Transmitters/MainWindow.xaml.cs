@@ -23,7 +23,7 @@ namespace TransmittersProblem
             PrepareCanvas();
         }
 
-        private void calculateButton_click(object sender, RoutedEventArgs e)
+        private void generateButton_click(object sender, RoutedEventArgs e)
         {
             canvas.Children.Clear();
             PrepareCanvas();
@@ -218,6 +218,60 @@ namespace TransmittersProblem
 
             var numberOfUsedColors = sortedListOfNodes.Select(n => n.color).Distinct().Count();
             resultLabel.Content = numberOfUsedColors;
+        }
+
+        private void openGxlButton_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog openDialog = new Microsoft.Win32.OpenFileDialog();
+            openDialog.DefaultExt = ".gxl";
+            openDialog.Filter = "Graph eXchange Language|*.gxl";
+            Graph graph;
+
+            try
+            {
+                openDialog.ShowDialog();
+                graph = Graph.ReadGXL(openDialog.FileName);
+                canvas.Children.Clear();
+                PrepareCanvas();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("File error.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            listOfNodes = graph.nodes;
+            listOfEdges = graph.edges;
+
+            foreach (var node in graph.nodes)
+            {
+                DrawColoredCircle(
+                    node.radius * Math.Cos(node.angle * Math.PI / 180),
+                    node.radius * Math.Sin(node.angle * Math.PI / 180),
+                    int.Parse(transmitterRadiusTextBox.Text)
+                );
+            }
+
+            foreach (var edge in graph.edges)
+            {
+                DrawLine(
+                    edge.start.radius * Math.Cos(edge.start.angle * Math.PI / 180),
+                    edge.start.radius * Math.Sin(edge.start.angle * Math.PI / 180),
+                    edge.end.radius * Math.Cos(edge.end.angle * Math.PI / 180),
+                    edge.end.radius * Math.Sin(edge.end.angle * Math.PI / 180)
+                );
+            }
+        }
+
+        private void saveGxlButton_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.SaveFileDialog saveDialog = new Microsoft.Win32.SaveFileDialog();
+            Graph graph = new Graph(listOfNodes, listOfEdges);
+
+            if ((bool)saveDialog.ShowDialog())
+            {
+                graph.GenerateGXL(saveDialog.FileName);
+            }
         }
     }
 }
