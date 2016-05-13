@@ -25,6 +25,7 @@ namespace Transmitters
         public void GenerateGXL(string fileName)
         {
             XElement gxl = new XElement("gxl");
+            XElement graph = new XElement("graph");
 
             foreach (var item in nodes)
             {
@@ -36,7 +37,7 @@ namespace Transmitters
                     Math.Round(item.radius * Math.Sin(item.angle * Math.PI / 180), 4));
 
                 node.Add(id, xPos, yPos);
-                gxl.Add(node);
+                graph.Add(node);
             }
 
             foreach (var item in edges)
@@ -47,19 +48,19 @@ namespace Transmitters
                 XAttribute end = new XAttribute("end", item.end.name);
 
                 edge.Add(id, start, end);
-                gxl.Add(edge);
+                graph.Add(edge);
             }
 
+            gxl.Add(graph);
             gxl.Save(fileName);
         }
         public static Graph ReadGXL(string fileName)
         {
             XDocument gxlDocument = XDocument.Load(fileName);
+            var graphNode = gxlDocument.Descendants().Where(n => n.Name == "graph");
 
-            var rawNodes = gxlDocument.Descendants().Where(n => n.Name == "node");
-            var rawEdges = gxlDocument.Descendants().Where(e => e.Name == "edge");
-
-            Console.WriteLine(gxlDocument);
+            var rawNodes = graphNode.Descendants().Where(n => n.Name == "node");
+            var rawEdges = graphNode.Descendants().Where(e => e.Name == "edge");
 
             var listOfReceivedNodes = new List<Node>();
             foreach (var node in rawNodes)
