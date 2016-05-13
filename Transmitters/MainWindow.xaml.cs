@@ -103,6 +103,22 @@ namespace TransmittersProblem
                     circle.Fill = new SolidColorBrush(Color.FromArgb(transparency, 0, 255, 255));
                     break;
 
+                case 7:
+                    circle.Fill = new SolidColorBrush(Color.FromArgb(transparency, 255, 128, 0));
+                    break;
+
+                case 8:
+                    circle.Fill = new SolidColorBrush(Color.FromArgb(transparency, 128, 0, 255));
+                    break;
+
+                case 9:
+                    circle.Fill = new SolidColorBrush(Color.FromArgb(transparency, 255, 64, 128));
+                    break;
+
+                case 10:
+                    circle.Fill = new SolidColorBrush(Color.FromArgb(transparency, 255, 255, 255));
+                    break;
+
                 default:
                     break;
             }
