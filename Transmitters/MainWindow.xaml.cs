@@ -46,14 +46,17 @@ namespace TransmittersProblem
                 );
             }
 
-            foreach (var edge in graph.edges)
+            if ((bool)edgeCheckBox.IsChecked)
             {
-                DrawLine(
-                    edge.start.radius * Math.Cos(edge.start.angle * Math.PI / 180),
-                    edge.start.radius * Math.Sin(edge.start.angle * Math.PI / 180),
-                    edge.end.radius * Math.Cos(edge.end.angle * Math.PI / 180),
-                    edge.end.radius * Math.Sin(edge.end.angle * Math.PI / 180)
-                );
+                foreach (var edge in graph.edges)
+                {
+                    DrawLine(
+                        edge.start.radius * Math.Cos(edge.start.angle * Math.PI / 180),
+                        edge.start.radius * Math.Sin(edge.start.angle * Math.PI / 180),
+                        edge.end.radius * Math.Cos(edge.end.angle * Math.PI / 180),
+                        edge.end.radius * Math.Sin(edge.end.angle * Math.PI / 180)
+                    );
+                } 
             }
 
         }
@@ -140,7 +143,7 @@ namespace TransmittersProblem
             canvas.Children.Add(circle);
         }
 
-        public void DrawLine(double X1, double Y1, double X2, double Y2, double thickness = 3, byte transparency = 40)
+        public void DrawLine(double X1, double Y1, double X2, double Y2, double thickness = 3, byte transparency = 60)
         {
             Line line = new Line();
             line.X1 = X1;
@@ -268,14 +271,18 @@ namespace TransmittersProblem
                 );
             }
 
-            foreach (var edge in graph.edges)
+
+            if ((bool)edgeCheckBox.IsChecked)
             {
-                DrawLine(
-                    edge.start.radius * Math.Cos(edge.start.angle * Math.PI / 180),
-                    edge.start.radius * Math.Sin(edge.start.angle * Math.PI / 180),
-                    edge.end.radius * Math.Cos(edge.end.angle * Math.PI / 180),
-                    edge.end.radius * Math.Sin(edge.end.angle * Math.PI / 180)
-                );
+                foreach (var edge in graph.edges)
+                {
+                    DrawLine(
+                        edge.start.radius * Math.Cos(edge.start.angle * Math.PI / 180),
+                        edge.start.radius * Math.Sin(edge.start.angle * Math.PI / 180),
+                        edge.end.radius * Math.Cos(edge.end.angle * Math.PI / 180),
+                        edge.end.radius * Math.Sin(edge.end.angle * Math.PI / 180)
+                    );
+                } 
             }
         }
 
@@ -288,6 +295,40 @@ namespace TransmittersProblem
             {
                 graph.GenerateGXL(saveDialog.FileName);
             }
+        }
+
+        private void edgeCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            foreach (var edge in listOfEdges)
+            {
+                DrawLine(
+                    edge.start.radius * Math.Cos(edge.start.angle * Math.PI / 180),
+                    edge.start.radius * Math.Sin(edge.start.angle * Math.PI / 180),
+                    edge.end.radius * Math.Cos(edge.end.angle * Math.PI / 180),
+                    edge.end.radius * Math.Sin(edge.end.angle * Math.PI / 180)
+                );
+            }
+        }
+
+        private void edgeCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            List<UIElement> list = new List<UIElement>();
+            foreach (UIElement item in canvas.Children)
+            {
+                if (item.GetType().ToString().Contains("Line"))
+                {
+                    list.Add(item);
+                }
+            }
+
+            foreach (UIElement item in list)
+            {
+                canvas.Children.Remove(item);
+            }
+
+            DrawLine(0, canvas.Height / 2, 0, -canvas.Height / 2, thickness: 0.5, transparency: 40);
+            DrawLine(-canvas.Width / 2, 0, canvas.Width / 2, 0, thickness: 0.5, transparency: 40);
+
         }
     }
 }
