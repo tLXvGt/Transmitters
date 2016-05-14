@@ -44,5 +44,7 @@
         
         <CheckBox x:Name="edgeCheckBox" Content="Show edges"
                   Margin="531,511,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="edgeCheckBox_Checked" Unchecked="edgeCheckBox_Unchecked"/>
+        <CheckBox x:Name="solveCheckBox" Content="Solve automatically"
+        	      Margin="531,491,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
     </Grid>
 </Window>

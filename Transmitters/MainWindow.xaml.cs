@@ -46,19 +46,35 @@ namespace TransmittersProblem
                 );
             }
 
-            if ((bool)edgeCheckBox.IsChecked)
+            foreach (var edge in graph.edges)
             {
-                foreach (var edge in graph.edges)
+                DrawLine(
+                    edge.start.radius * Math.Cos(edge.start.angle * Math.PI / 180),
+                    edge.start.radius * Math.Sin(edge.start.angle * Math.PI / 180),
+                    edge.end.radius * Math.Cos(edge.end.angle * Math.PI / 180),
+                    edge.end.radius * Math.Sin(edge.end.angle * Math.PI / 180)
+                );
+            } 
+
+            if (!(bool)edgeCheckBox.IsChecked)
+            {
+                foreach (UIElement element in canvas.Children)
                 {
-                    DrawLine(
-                        edge.start.radius * Math.Cos(edge.start.angle * Math.PI / 180),
-                        edge.start.radius * Math.Sin(edge.start.angle * Math.PI / 180),
-                        edge.end.radius * Math.Cos(edge.end.angle * Math.PI / 180),
-                        edge.end.radius * Math.Sin(edge.end.angle * Math.PI / 180)
-                    );
-                } 
+                    if (element.GetType() == typeof(Line))
+                    {
+                        element.Visibility = Visibility.Hidden;
+                        if ((element as Line).StrokeThickness == 0.5)
+                        {
+                            element.Visibility = Visibility.Visible;
+                        }
+                    }
+                }
             }
 
+            if ((bool)solveCheckBox.IsChecked)
+            {
+                SolveMethod();
+            }
         }
 
         public void PrepareCanvas()
@@ -188,6 +204,11 @@ namespace TransmittersProblem
 
         private void solveButton_Click(object sender, RoutedEventArgs e)
         {
+            SolveMethod();
+        }
+
+        public void SolveMethod()
+        {
             var sortedListOfNodes = listOfNodes.OrderByDescending(n => n.neighbourCount);
             var currentColor = 1;
 
@@ -271,18 +292,29 @@ namespace TransmittersProblem
                 );
             }
 
-
-            if ((bool)edgeCheckBox.IsChecked)
+            foreach (var edge in graph.edges)
             {
-                foreach (var edge in graph.edges)
+                DrawLine(
+                    edge.start.radius * Math.Cos(edge.start.angle * Math.PI / 180),
+                    edge.start.radius * Math.Sin(edge.start.angle * Math.PI / 180),
+                    edge.end.radius * Math.Cos(edge.end.angle * Math.PI / 180),
+                    edge.end.radius * Math.Sin(edge.end.angle * Math.PI / 180)
+                );
+            }
+
+            if (!(bool)edgeCheckBox.IsChecked)
+            {
+                foreach (UIElement element in canvas.Children)
                 {
-                    DrawLine(
-                        edge.start.radius * Math.Cos(edge.start.angle * Math.PI / 180),
-                        edge.start.radius * Math.Sin(edge.start.angle * Math.PI / 180),
-                        edge.end.radius * Math.Cos(edge.end.angle * Math.PI / 180),
-                        edge.end.radius * Math.Sin(edge.end.angle * Math.PI / 180)
-                    );
-                } 
+                    if (element.GetType() == typeof(Line))
+                    {
+                        element.Visibility = Visibility.Hidden;
+                        if ((element as Line).StrokeThickness == 0.5)
+                        {
+                            element.Visibility = Visibility.Visible;
+                        }
+                    }
+                }
             }
         }
 
@@ -299,36 +331,28 @@ namespace TransmittersProblem
 
         private void edgeCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            foreach (var edge in listOfEdges)
+            foreach (UIElement element in canvas.Children)
             {
-                DrawLine(
-                    edge.start.radius * Math.Cos(edge.start.angle * Math.PI / 180),
-                    edge.start.radius * Math.Sin(edge.start.angle * Math.PI / 180),
-                    edge.end.radius * Math.Cos(edge.end.angle * Math.PI / 180),
-                    edge.end.radius * Math.Sin(edge.end.angle * Math.PI / 180)
-                );
+                if (element.GetType() == typeof(Line))
+                {
+                    element.Visibility = Visibility.Visible;
+                }
             }
         }
 
         private void edgeCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
-            List<UIElement> list = new List<UIElement>();
-            foreach (UIElement item in canvas.Children)
+            foreach (UIElement element in canvas.Children)
             {
-                if (item.GetType().ToString().Contains("Line"))
+                if (element.GetType() == typeof(Line))
                 {
-                    list.Add(item);
+                    element.Visibility = Visibility.Hidden;
+                    if ((element as Line).StrokeThickness == 0.5)
+                    {
+                        element.Visibility = Visibility.Visible;
+                    }
                 }
             }
-
-            foreach (UIElement item in list)
-            {
-                canvas.Children.Remove(item);
-            }
-
-            DrawLine(0, canvas.Height / 2, 0, -canvas.Height / 2, thickness: 0.5, transparency: 40);
-            DrawLine(-canvas.Width / 2, 0, canvas.Width / 2, 0, thickness: 0.5, transparency: 40);
-
         }
     }
 }
